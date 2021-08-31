@@ -1,0 +1,1046 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Versión del servidor:         10.6.3-MariaDB - mariadb.org binary distribution
+-- SO del servidor:              Win64
+-- HeidiSQL Versión:             11.3.0.6295
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- Volcando estructura para tabla proyecto.unit00.apertura_caja
+CREATE TABLE IF NOT EXISTS `apertura_caja` (
+  `id_apertura` bigint(20) NOT NULL AUTO_INCREMENT,
+  `cantidad_billetes` int(11) NOT NULL,
+  `cantidad_monedas` double NOT NULL,
+  `cien_pesos` int(11) NOT NULL,
+  `cinco_centavos` int(11) NOT NULL,
+  `cinco_pesos` int(11) NOT NULL,
+  `cincuenta_centavos` int(11) NOT NULL,
+  `cincuenta_pesos` int(11) NOT NULL,
+  `diez_centavos` int(11) NOT NULL,
+  `diez_pesos` int(11) NOT NULL,
+  `dos_pesos` int(11) NOT NULL,
+  `doscientos_pesos` int(11) NOT NULL,
+  `mil_pesos` int(11) NOT NULL,
+  `quinientos_pesos` int(11) NOT NULL,
+  `suma_total` double NOT NULL,
+  `un_peso` int(11) NOT NULL,
+  `veinte_pesos` int(11) NOT NULL,
+  `veinte_pesosb` int(11) NOT NULL,
+  PRIMARY KEY (`id_apertura`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.apertura_caja: ~6 rows (aproximadamente)
+/*!40000 ALTER TABLE `apertura_caja` DISABLE KEYS */;
+INSERT INTO `apertura_caja` (`id_apertura`, `cantidad_billetes`, `cantidad_monedas`, `cien_pesos`, `cinco_centavos`, `cinco_pesos`, `cincuenta_centavos`, `cincuenta_pesos`, `diez_centavos`, `diez_pesos`, `dos_pesos`, `doscientos_pesos`, `mil_pesos`, `quinientos_pesos`, `suma_total`, `un_peso`, `veinte_pesos`, `veinte_pesosb`) VALUES
+	(1, 24, 10, 2, 2, 3, 2, 5, 2, 3, 5, 1, 2, 2, 200, 2, 4, 5),
+	(2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+/*!40000 ALTER TABLE `apertura_caja` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.arqueo
+CREATE TABLE IF NOT EXISTS `arqueo` (
+  `id_arqueo` bigint(20) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `tipo_arqueo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_arqueo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.arqueo: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `arqueo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `arqueo` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.arqueo_detalle
+CREATE TABLE IF NOT EXISTS `arqueo_detalle` (
+  `folio` bigint(20) NOT NULL AUTO_INCREMENT,
+  `estatus` varchar(255) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `monto_final` double NOT NULL,
+  `monto_inicial` double NOT NULL,
+  `retiros` double NOT NULL,
+  `venta_total` double NOT NULL,
+  `id_arqueo` bigint(20) DEFAULT NULL,
+  `n_boveda` bigint(20) DEFAULT NULL,
+  `n_caja` bigint(20) DEFAULT NULL,
+  `n_cajero` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`folio`),
+  KEY `FKp26yshjksgtgwxeo7vu07sy93` (`id_arqueo`),
+  KEY `FKbr3k0opr5jj3sbuf6u8pl6r8p` (`n_boveda`),
+  KEY `FKd133g33tdgwp4r4v02410ddeo` (`n_caja`),
+  KEY `FK8wbdioi4grdchw7a5pvm2636n` (`n_cajero`),
+  CONSTRAINT `FK8wbdioi4grdchw7a5pvm2636n` FOREIGN KEY (`n_cajero`) REFERENCES `cajero_automatico` (`n_cajero`),
+  CONSTRAINT `FKbr3k0opr5jj3sbuf6u8pl6r8p` FOREIGN KEY (`n_boveda`) REFERENCES `boveda` (`n_boveda`),
+  CONSTRAINT `FKd133g33tdgwp4r4v02410ddeo` FOREIGN KEY (`n_caja`) REFERENCES `caja` (`n_caja`),
+  CONSTRAINT `FKp26yshjksgtgwxeo7vu07sy93` FOREIGN KEY (`id_arqueo`) REFERENCES `arqueo` (`id_arqueo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.arqueo_detalle: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `arqueo_detalle` DISABLE KEYS */;
+/*!40000 ALTER TABLE `arqueo_detalle` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.articulo
+CREATE TABLE IF NOT EXISTS `articulo` (
+  `sku` char(1) NOT NULL,
+  `categoria` varchar(255) DEFAULT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `marca` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`sku`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.articulo: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `articulo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `articulo` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.billete
+CREATE TABLE IF NOT EXISTS `billete` (
+  `id_billete` bigint(20) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `valor_billete` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_billete`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.billete: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `billete` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billete` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.boveda
+CREATE TABLE IF NOT EXISTS `boveda` (
+  `n_boveda` bigint(20) NOT NULL AUTO_INCREMENT,
+  `deposito` double NOT NULL,
+  `monto` double NOT NULL,
+  `retiro` double NOT NULL,
+  `id_billete` bigint(20) DEFAULT NULL,
+  `id_moneda` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`n_boveda`),
+  KEY `FKb7iyg2ssad6wbmc92omu875b0` (`id_billete`),
+  KEY `FKxko0df6udl473vss65e07r5e` (`id_moneda`),
+  CONSTRAINT `FKb7iyg2ssad6wbmc92omu875b0` FOREIGN KEY (`id_billete`) REFERENCES `billete` (`id_billete`),
+  CONSTRAINT `FKxko0df6udl473vss65e07r5e` FOREIGN KEY (`id_moneda`) REFERENCES `moneda` (`id_moneda`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.boveda: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `boveda` DISABLE KEYS */;
+/*!40000 ALTER TABLE `boveda` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.caja
+CREATE TABLE IF NOT EXISTS `caja` (
+  `n_caja` bigint(20) NOT NULL AUTO_INCREMENT,
+  `apertura` date DEFAULT NULL,
+  `cantidad_billete` int(11) DEFAULT NULL,
+  `cantidad_moneda` int(11) DEFAULT NULL,
+  `cierre` date DEFAULT NULL,
+  `estatus` varchar(255) DEFAULT NULL,
+  `id_billete` bigint(20) DEFAULT NULL,
+  `id_moneda` bigint(20) DEFAULT NULL,
+  `id_apertura` bigint(20) DEFAULT NULL,
+  `id_cierre` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`n_caja`),
+  KEY `FKp28emfcaks595reemdtgli9we` (`id_billete`),
+  KEY `FKd02ua3myn8bgtbuf9vj1983ka` (`id_moneda`),
+  KEY `FKnx578mfyk9x1r3hcqme1nt2cf` (`id_apertura`),
+  KEY `FKroytbwjsckpwdxe72hdt5wy8l` (`id_cierre`),
+  CONSTRAINT `FKd02ua3myn8bgtbuf9vj1983ka` FOREIGN KEY (`id_moneda`) REFERENCES `moneda` (`id_moneda`),
+  CONSTRAINT `FKnx578mfyk9x1r3hcqme1nt2cf` FOREIGN KEY (`id_apertura`) REFERENCES `apertura_caja` (`id_apertura`),
+  CONSTRAINT `FKp28emfcaks595reemdtgli9we` FOREIGN KEY (`id_billete`) REFERENCES `billete` (`id_billete`),
+  CONSTRAINT `FKroytbwjsckpwdxe72hdt5wy8l` FOREIGN KEY (`id_cierre`) REFERENCES `cierre_caja` (`id_cierre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.caja: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `caja` DISABLE KEYS */;
+/*!40000 ALTER TABLE `caja` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.cajero_automatico
+CREATE TABLE IF NOT EXISTS `cajero_automatico` (
+  `n_cajero` bigint(20) NOT NULL AUTO_INCREMENT,
+  `edo_cuenta` varchar(255) DEFAULT NULL,
+  `monto` double NOT NULL,
+  `n_transacciones` int(11) DEFAULT NULL,
+  `retiro` double NOT NULL,
+  `id_billete` bigint(20) DEFAULT NULL,
+  `id_moneda` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`n_cajero`),
+  KEY `FKggrcxhug1hhqba2q8rl9o09r7` (`id_billete`),
+  KEY `FKkdad5ld1hglj5wnvqemtylott` (`id_moneda`),
+  CONSTRAINT `FKggrcxhug1hhqba2q8rl9o09r7` FOREIGN KEY (`id_billete`) REFERENCES `billete` (`id_billete`),
+  CONSTRAINT `FKkdad5ld1hglj5wnvqemtylott` FOREIGN KEY (`id_moneda`) REFERENCES `moneda` (`id_moneda`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.cajero_automatico: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `cajero_automatico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cajero_automatico` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.cierre_caja
+CREATE TABLE IF NOT EXISTS `cierre_caja` (
+  `id_cierre` bigint(20) NOT NULL AUTO_INCREMENT,
+  `cantidad_billetes` int(11) NOT NULL,
+  `cantidad_monedas` double NOT NULL,
+  `cien_pesos` int(11) NOT NULL,
+  `cinco_centavos` int(11) NOT NULL,
+  `cinco_pesos` int(11) NOT NULL,
+  `cincuenta_centavos` int(11) NOT NULL,
+  `cincuenta_pesos` int(11) NOT NULL,
+  `diez_centavos` int(11) NOT NULL,
+  `diez_pesos` int(11) NOT NULL,
+  `dos_pesos` int(11) NOT NULL,
+  `doscientos_pesos` int(11) NOT NULL,
+  `mil_pesos` int(11) NOT NULL,
+  `quinientos_pesos` int(11) NOT NULL,
+  `suma_total` double NOT NULL,
+  `un_peso` int(11) NOT NULL,
+  `veinte_pesos` int(11) NOT NULL,
+  `veinte_pesosb` int(11) NOT NULL,
+  PRIMARY KEY (`id_cierre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.cierre_caja: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `cierre_caja` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cierre_caja` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.cliente
+CREATE TABLE IF NOT EXISTS `cliente` (
+  `id_cliente` bigint(20) NOT NULL AUTO_INCREMENT,
+  `apellidos` varchar(255) DEFAULT NULL,
+  `credito` double NOT NULL,
+  `cuenta` bigint(20) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_cliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.cliente: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.empleado
+CREATE TABLE IF NOT EXISTS `empleado` (
+  `matricula` bigint(20) NOT NULL AUTO_INCREMENT,
+  `password` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `id_persona` bigint(20) DEFAULT NULL,
+  `id_puesto` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`matricula`),
+  KEY `FK3yo5m2sf91t2spkatlwxagm5x` (`id_persona`),
+  KEY `FKf47n9mwo2xijdtctmjuq5rhyf` (`id_puesto`),
+  CONSTRAINT `FK3yo5m2sf91t2spkatlwxagm5x` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`),
+  CONSTRAINT `FKf47n9mwo2xijdtctmjuq5rhyf` FOREIGN KEY (`id_puesto`) REFERENCES `puesto` (`id_puesto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.empleado: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
+/*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
+
+-- Volcando estructura para procedimiento proyecto.unit00.id_billete
+DELIMITER //
+CREATE PROCEDURE `id_billete`(
+	IN `idIn` INT
+)
+    READS SQL DATA
+BEGIN
+SELECT * FROM billete WHERE id_billete = idIn;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.id_detalle
+DELIMITER //
+CREATE PROCEDURE `id_detalle`()
+BEGIN
+SELECT * FROM tienda_detalle WHERE id_detalle = idIn;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.id_moneda
+DELIMITER //
+CREATE PROCEDURE `id_moneda`(
+	IN `idIn` INT
+)
+    READS SQL DATA
+BEGIN
+SELECT * FROM moneda WHERE id_moneda = idIn;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.id_operacion
+DELIMITER //
+CREATE PROCEDURE `id_operacion`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM operacion WHERE id_operacion = idIn;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.id_pago
+DELIMITER //
+CREATE PROCEDURE `id_pago`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM pago WHERE id_pago = idIn;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.id_referencia
+DELIMITER //
+CREATE PROCEDURE `id_referencia`()
+BEGIN
+SELECT * FROM transaccion_encabezado WHERE referencia = idIn;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.id_tdetalle
+DELIMITER //
+CREATE PROCEDURE `id_tdetalle`(
+	IN `idIn` INT
+)
+    READS SQL DATA
+BEGIN
+SELECT * FROM transaccion_detalle WHERE id_tdetalle = idIn;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.id_tienda
+DELIMITER //
+CREATE PROCEDURE `id_tienda`()
+BEGIN
+SELECT * FROM tipo_tienda WHERE id_tienda = idIn;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.id_ubicacion
+DELIMITER //
+CREATE PROCEDURE `id_ubicacion`(
+	IN `idIn` INT
+)
+    READS SQL DATA
+BEGIN
+SELECT * FROM ubucacion WHERE id_ubicacion = idIn;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.lista_billete
+DELIMITER //
+CREATE PROCEDURE `lista_billete`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM billete;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.lista_boveda
+DELIMITER //
+CREATE PROCEDURE `lista_boveda`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM boveda;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.lista_caja
+DELIMITER //
+CREATE PROCEDURE `lista_caja`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM caja;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.lista_cajero
+DELIMITER //
+CREATE PROCEDURE `lista_cajero`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM cajero_automatico;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.lista_moneda
+DELIMITER //
+CREATE PROCEDURE `lista_moneda`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM moneda;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.lista_operacion
+DELIMITER //
+CREATE PROCEDURE `lista_operacion`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM operacion;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.lista_pago
+DELIMITER //
+CREATE PROCEDURE `lista_pago`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM pago;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.lista_tienda
+DELIMITER //
+CREATE PROCEDURE `lista_tienda`()
+BEGIN
+SELECT * FROM tipo_tienda;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.lista_tienda_detalle
+DELIMITER //
+CREATE PROCEDURE `lista_tienda_detalle`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM tienda_detalle;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.lista_transaccion_detalle
+DELIMITER //
+CREATE PROCEDURE `lista_transaccion_detalle`()
+BEGIN
+SELECT * FROM transaccion_detalle;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.lista_transacion_encabezado
+DELIMITER //
+CREATE PROCEDURE `lista_transacion_encabezado`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM transaccion_encabezado;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.lista_ubicacion
+DELIMITER //
+CREATE PROCEDURE `lista_ubicacion`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM ubucacion;
+END//
+DELIMITER ;
+
+-- Volcando estructura para tabla proyecto.unit00.moneda
+CREATE TABLE IF NOT EXISTS `moneda` (
+  `id_moneda` bigint(20) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `valor_moneda` double NOT NULL,
+  PRIMARY KEY (`id_moneda`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.moneda: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `moneda` DISABLE KEYS */;
+/*!40000 ALTER TABLE `moneda` ENABLE KEYS */;
+
+-- Volcando estructura para procedimiento proyecto.unit00.n_boveda
+DELIMITER //
+CREATE PROCEDURE `n_boveda`(
+	IN `idIn` INT
+)
+    READS SQL DATA
+BEGIN
+SELECT * FROM boveda WHERE n_boveda = idIn;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.n_cajero
+DELIMITER //
+CREATE PROCEDURE `n_cajero`(
+	IN `idIn` INT
+)
+    READS SQL DATA
+BEGIN
+SELECT * FROM cajero_automatico WHERE n_cajero = idIn;
+END//
+DELIMITER ;
+
+-- Volcando estructura para tabla proyecto.unit00.operacion
+CREATE TABLE IF NOT EXISTS `operacion` (
+  `id_operacion` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tipo_operacion` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_operacion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.operacion: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `operacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `operacion` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.pago
+CREATE TABLE IF NOT EXISTS `pago` (
+  `id_pago` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tipo_pago` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_pago`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.pago: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `pago` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pago` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.persona
+CREATE TABLE IF NOT EXISTS `persona` (
+  `id_persona` bigint(20) NOT NULL AUTO_INCREMENT,
+  `apellidom` varchar(255) DEFAULT NULL,
+  `apellidop` varchar(255) DEFAULT NULL,
+  `estatus` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_persona`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.persona: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `persona` DISABLE KEYS */;
+/*!40000 ALTER TABLE `persona` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.puesto
+CREATE TABLE IF NOT EXISTS `puesto` (
+  `id_puesto` bigint(20) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `tipo_puesto` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_puesto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.puesto: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `puesto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `puesto` ENABLE KEYS */;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_apertura
+DELIMITER //
+CREATE PROCEDURE `save_apertura`(
+	IN `cantidadBilleteIn` INT,
+	IN `cantidadMonedaIn` DOUBLE,
+	IN `cienPesosIn` INT,
+	IN `cincoCentavosIn` INT,
+	IN `cincoPesosIn` INT,
+	IN `cincuentaCentavosIn` INT,
+	IN `cincuentaPesosIn` INT,
+	IN `diezCentavosIn` INT,
+	IN `diezPesosIn` INT,
+	IN `dosPesosIn` INT,
+	IN `doscientosPesosIn` INT,
+	IN `milPesosIn` INT,
+	IN `quinientosPesosIn` INT,
+	IN `sumaTotalIn` DOUBLE,
+	IN `unPesoIn` INT,
+	IN `veintePesosIn` INT,
+	IN `veintePesosBIn` INT
+)
+    READS SQL DATA
+BEGIN
+INSERT INTO apertura_caja(cantidad_billetes,cantidad_monedas,cien_pesos,cinco_centavos,cinco_pesos,cincuenta_centavos,cincuenta_pesos,diez_centavos,diez_pesos,dos_pesos,doscientos_pesos,mil_pesos,quinientos_pesos,suma_total,un_peso,veinte_pesos,veinte_pesosb) VALUES (cantidadBilleteIn,cantidadMonedaIn,cienPesosIn,cincoCentavosIn,cincoPesosIn,cincuentaCentavosIn,cincuentaPesosIn,diezCentavosIn,diezPesosIn,dosPesosIn,doscientosPesosIn,milPesosIn,quinientosPesosIn,sumaTotalIn,unPesoIn,veintePesosIn,veintePesosBIn);
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_billete
+DELIMITER //
+CREATE PROCEDURE `save_billete`(
+	IN `valor_billeteIn` INT,
+	IN `descripcionIn` VARCHAR(50)
+)
+    READS SQL DATA
+BEGIN
+INSERT INTO billete(valor_billete,descripcion) VALUES (valor_billeteIn,descripcionIn);
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_boveda
+DELIMITER //
+CREATE PROCEDURE `save_boveda`(
+	IN `depositoIn` DOUBLE,
+	IN `montoIn` DOUBLE,
+	IN `retiroIn` DOUBLE,
+	IN `billeteIn` INT,
+	IN `monedaIn` INT
+)
+BEGIN
+INSERT INTO boveda (deposito, monto, retiro, id_billete, id_moneda) 
+VALUES (depositoIn, montoIn, retiroIn, billeteIn, monedaIn);
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_caja
+DELIMITER //
+CREATE PROCEDURE `save_caja`(
+	IN `aperturaIn` DATE,
+	IN `cantidad_billeteIn` INT,
+	IN `cantidad_monedaIn` INT,
+	IN `cierreIn` DATE,
+	IN `estatusIn` VARCHAR(50),
+	IN `billeteIn` INT,
+	IN `monedaIn` INT
+)
+    READS SQL DATA
+BEGIN
+INSERT INTO caja (apertura, cantidad_billete, cantidad_moneda, cierre, estatus, id_billete, id_moneda) VALUES (aperturaIn, cantidad_billeteIn, cantidad_monedaIn, cierreIn, estatusIn, billeteIn, monedaIn);
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_cajero
+DELIMITER //
+CREATE PROCEDURE `save_cajero`(
+	IN `edo_cuentaIn` VARCHAR(50),
+	IN `montoIn` DOUBLE,
+	IN `n_transaccionesIn` INT,
+	IN `retiroIn` DOUBLE,
+	IN `billeteIn` INT,
+	IN `monedaIn` INT
+)
+BEGIN
+INSERT INTO cajero_automatico (edo_cuenta, monto, n_transacciones, retiro, id_billete, id_moneda) 
+VALUES (edo_cuentaIn, montoIn, n_transaccionesIn, retiroIn, billeteIn, monedaIn);
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_moneda
+DELIMITER //
+CREATE PROCEDURE `save_moneda`(
+	IN `valor_monedaIn` DOUBLE,
+	IN `descripcionIn` VARCHAR(50)
+)
+    READS SQL DATA
+    DETERMINISTIC
+BEGIN
+INSERT INTO moneda(valor_moneda,descripcion) VALUES (valor_monedaIn,descripcionIn);
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_operacion
+DELIMITER //
+CREATE PROCEDURE `save_operacion`(
+	IN `tipo_operacionIn` VARCHAR(50)
+)
+BEGIN
+INSERT INTO operacion (tipo_operacion) 
+VALUES (tipo_operacionIn);
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_pago
+DELIMITER //
+CREATE PROCEDURE `save_pago`(
+	IN `tipo_pagoIn` CHAR(50)
+)
+BEGIN
+INSERT INTO pago(tipo_pago) VALUES (tipo_pagoIn);
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_tienda_detalle
+DELIMITER //
+CREATE PROCEDURE `save_tienda_detalle`(
+	IN `descripcionIn` VARCHAR(50),
+	IN `nombreIn` VARCHAR(50),
+	IN `tokenIn` CHAR(50),
+	IN `bovedaIn` INT,
+	IN `cajaIn` INT,
+	IN `cajeroIn` INT,
+	IN `clienteIn` INT,
+	IN `matriculaIn` INT,
+	IN `tiendaIn` INT,
+	IN `ubicacionIn` INT
+)
+BEGIN
+INSERT INTO tienda_detalle (descripcion, nombre, token, n_boveda, n_caja, n_cajero,id_cliente,matricula,id_tienda,id_ubicacion) 
+VALUES (descripcionIn, nombreIn, tokenIn, bovedaIn, cajaIn, cajeroIn, clienteIn,matriculaIn,tiendaIn,ubicacionIn);
+
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_tipo_tienda
+DELIMITER //
+CREATE PROCEDURE `save_tipo_tienda`(
+	IN `descripcionIn` VARCHAR(50),
+	IN `tipo_tiendaIn` VARCHAR(50)
+)
+BEGIN
+INSERT INTO tipo_tienda (descripcion, tipo_tienda) 
+VALUES (descripcionIn,tipo_tiendaIn);
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_transaccion_detalle
+DELIMITER //
+CREATE PROCEDURE `save_transaccion_detalle`(
+	IN `aperturaIn` DATE,
+	IN `cierreIn` DATE,
+	IN `estatusIn` VARCHAR(50),
+	IN `referenciaIn` INT
+)
+BEGIN
+INSERT INTO transaccion_detalle (apertura, cierre, estatus, referencia) 
+VALUES (aperturaIn, cierreIn, estatusIn, referenciaIn);
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_transaccion_encabezado
+DELIMITER //
+CREATE PROCEDURE `save_transaccion_encabezado`(
+	IN `fechaIn` DATE,
+	IN `montoIn` DOUBLE,
+	IN `operacion_detinoIn` VARCHAR(50),
+	IN `operacion_origenIn` VARCHAR(50),
+	IN `clienteIn` INT,
+	IN `operacionIn` INT,
+	IN `pagoIN` INT
+)
+BEGIN
+INSERT INTO transaccion_encabezado (fecha, monto, operacion_destino, opercion_origen,id_cliente,id_operacion,id_pago) 
+VALUES (fechaIn, montoIn, operacion_destinoIn, opercion_origenIn,clienteIn,operacionIn,pagoIN);
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.save_ubicacion
+DELIMITER //
+CREATE PROCEDURE `save_ubicacion`(
+	IN `ciudadIn` VARCHAR(50),
+	IN `estadoIn` VARCHAR(50),
+	IN `paisIn` INT,
+	IN `skuIn` CHAR(50)
+)
+BEGIN
+INSERT INTO ubucacion (ciudad, estado, pais, sku) 
+VALUES (ciudadIn, estadoIn, paisIn, skuIn);
+
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.selectId_caja
+DELIMITER //
+CREATE PROCEDURE `selectId_caja`(
+	IN `cajaIn` INT
+)
+    READS SQL DATA
+BEGIN
+SELECT * FROM caja WHERE n_caja = cajaIn; 
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.select_apertura
+DELIMITER //
+CREATE PROCEDURE `select_apertura`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM apertura_caja;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.select_caja
+DELIMITER //
+CREATE PROCEDURE `select_caja`()
+    READS SQL DATA
+BEGIN
+SELECT * FROM caja;
+END//
+DELIMITER ;
+
+-- Volcando estructura para tabla proyecto.unit00.tienda_detalle
+CREATE TABLE IF NOT EXISTS `tienda_detalle` (
+  `id_detalle` bigint(20) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `token` char(1) NOT NULL,
+  `n_boveda` bigint(20) DEFAULT NULL,
+  `n_caja` bigint(20) DEFAULT NULL,
+  `n_cajero` bigint(20) DEFAULT NULL,
+  `id_cliente` bigint(20) DEFAULT NULL,
+  `matricula` bigint(20) DEFAULT NULL,
+  `id_tienda` bigint(20) DEFAULT NULL,
+  `id_ubicacion` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id_detalle`),
+  KEY `FK7g0arf0he7ackm2jkgj6sek0k` (`n_boveda`),
+  KEY `FKrg5dy5lmkd21peiba6p5vue4w` (`n_caja`),
+  KEY `FKb9yaq2os2ubswvg25q4maro77` (`n_cajero`),
+  KEY `FKmhyqicowmn0h8pe61cu9e2ivv` (`id_cliente`),
+  KEY `FKdn6rk13x0mkvb1eej39pvyyk5` (`matricula`),
+  KEY `FK77d4b51e6b9rq1rdvsteplr7e` (`id_tienda`),
+  KEY `FKn783l8qxp5aujf6remplkkg8u` (`id_ubicacion`),
+  CONSTRAINT `FK77d4b51e6b9rq1rdvsteplr7e` FOREIGN KEY (`id_tienda`) REFERENCES `tipo_tienda` (`id_tienda`),
+  CONSTRAINT `FK7g0arf0he7ackm2jkgj6sek0k` FOREIGN KEY (`n_boveda`) REFERENCES `boveda` (`n_boveda`),
+  CONSTRAINT `FKb9yaq2os2ubswvg25q4maro77` FOREIGN KEY (`n_cajero`) REFERENCES `cajero_automatico` (`n_cajero`),
+  CONSTRAINT `FKdn6rk13x0mkvb1eej39pvyyk5` FOREIGN KEY (`matricula`) REFERENCES `empleado` (`matricula`),
+  CONSTRAINT `FKmhyqicowmn0h8pe61cu9e2ivv` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`),
+  CONSTRAINT `FKn783l8qxp5aujf6remplkkg8u` FOREIGN KEY (`id_ubicacion`) REFERENCES `ubicacion` (`id_ubicacion`),
+  CONSTRAINT `FKrg5dy5lmkd21peiba6p5vue4w` FOREIGN KEY (`n_caja`) REFERENCES `caja` (`n_caja`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.tienda_detalle: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `tienda_detalle` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tienda_detalle` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.tipo_tienda
+CREATE TABLE IF NOT EXISTS `tipo_tienda` (
+  `id_tienda` bigint(20) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `tipo_tienda` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_tienda`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.tipo_tienda: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `tipo_tienda` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tipo_tienda` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.transaccion_detalle
+CREATE TABLE IF NOT EXISTS `transaccion_detalle` (
+  `id_tdetalle` bigint(20) NOT NULL AUTO_INCREMENT,
+  `apertura` date DEFAULT NULL,
+  `cierre` date DEFAULT NULL,
+  `estatus` varchar(255) DEFAULT NULL,
+  `referencia` char(1) DEFAULT NULL,
+  PRIMARY KEY (`id_tdetalle`),
+  KEY `FKphh71brgoomklrmea6xf6yw1u` (`referencia`),
+  CONSTRAINT `FKphh71brgoomklrmea6xf6yw1u` FOREIGN KEY (`referencia`) REFERENCES `transaccion_encabezado` (`referencia`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.transaccion_detalle: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `transaccion_detalle` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transaccion_detalle` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.transaccion_encabezado
+CREATE TABLE IF NOT EXISTS `transaccion_encabezado` (
+  `referencia` char(1) NOT NULL,
+  `fecha` date DEFAULT NULL,
+  `monto` double NOT NULL,
+  `operacion_destino` varchar(255) DEFAULT NULL,
+  `opercion_origen` varchar(255) DEFAULT NULL,
+  `id_cliente` bigint(20) DEFAULT NULL,
+  `id_operacion` bigint(20) DEFAULT NULL,
+  `id_pago` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`referencia`),
+  KEY `FKo77xvr3atxbj4jbm7b7emt59g` (`id_cliente`),
+  KEY `FKbjakoaia9m0odsa4oeh6r38q9` (`id_operacion`),
+  KEY `FKmneb1xh1krjb6dqe6cejkjk54` (`id_pago`),
+  CONSTRAINT `FKbjakoaia9m0odsa4oeh6r38q9` FOREIGN KEY (`id_operacion`) REFERENCES `operacion` (`id_operacion`),
+  CONSTRAINT `FKmneb1xh1krjb6dqe6cejkjk54` FOREIGN KEY (`id_pago`) REFERENCES `pago` (`id_pago`),
+  CONSTRAINT `FKo77xvr3atxbj4jbm7b7emt59g` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.transaccion_encabezado: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `transaccion_encabezado` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transaccion_encabezado` ENABLE KEYS */;
+
+-- Volcando estructura para tabla proyecto.unit00.ubicacion
+CREATE TABLE IF NOT EXISTS `ubicacion` (
+  `id_ubicacion` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ciudad` varchar(255) DEFAULT NULL,
+  `estado` varchar(255) DEFAULT NULL,
+  `pais` varchar(255) DEFAULT NULL,
+  `sku` char(1) DEFAULT NULL,
+  PRIMARY KEY (`id_ubicacion`),
+  KEY `FKsrrordqo45mut22570whlgwuh` (`sku`),
+  CONSTRAINT `FKsrrordqo45mut22570whlgwuh` FOREIGN KEY (`sku`) REFERENCES `articulo` (`sku`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla proyecto.unit00.ubicacion: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `ubicacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ubicacion` ENABLE KEYS */;
+
+-- Volcando estructura para procedimiento proyecto.unit00.update_billete
+DELIMITER //
+CREATE PROCEDURE `update_billete`(
+	IN `billeteIn` INT,
+	IN `valor_billeteIn` INT,
+	IN `decripcionIn` VARCHAR(50)
+)
+BEGIN
+UPDATE billete SET valor_billete = valor_billeteIn,
+                   descripcion = descripcionIn
+					 
+				WHERE id_billete = billeteIn ;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.update_boveda
+DELIMITER //
+CREATE PROCEDURE `update_boveda`(
+	IN `bovedaIn` INT,
+	IN `depositoIn` DOUBLE,
+	IN `montoIn` DOUBLE,
+	IN `retiroIn` DOUBLE,
+	IN `billeteIn` INT,
+	IN `monedaIn` INT
+)
+BEGIN
+UPDATE boveda SET deposito = depositoIn, 
+                  monto = montoIn, 
+						retiro = retiroIn, 
+						id_billete = billeteIn, 
+						id_moneda = monedaIn 
+WHERE n_boveda = bovedaIn;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.update_caja
+DELIMITER //
+CREATE PROCEDURE `update_caja`(
+	IN `cajaIn` INT,
+	IN `aperturaIn` DATE,
+	IN `cantBilleteIn` INT,
+	IN `cantMonedaIn` INT,
+	IN `cierreIn` DATE,
+	IN `estatusIn` VARCHAR(50),
+	IN `billeteIn` INT,
+	IN `monedaIn` INT
+)
+    READS SQL DATA
+BEGIN
+UPDATE caja SET apertura = aperturaIn,
+					 cantidad_billete = cantBilleteIn,
+					 cantidad_moneda = cantMonedaIn,
+					 cierre = cierreIn,
+					 estatus = estatusIn,
+					 id_billete = billeteIn,
+					 id_moneda = monedaIn
+				WHERE n_caja = cajaIn ;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.update_moneda
+DELIMITER //
+CREATE PROCEDURE `update_moneda`(
+	IN `uid_moneda` INT,
+	IN `uvalor_moneda` DOUBLE,
+	IN `udescripcion` VARCHAR(50)
+)
+    READS SQL DATA
+BEGIN
+UPDATE moneda set valor_moneda = uvalor_moneda, descripcion = udescripcion
+WHERE id_moneda = uid_moneda;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.update_operacion
+DELIMITER //
+CREATE PROCEDURE `update_operacion`(
+	IN `operacionIn` INT,
+	IN `tipo_operacionIn` VARCHAR(50)
+)
+BEGIN
+UPDATE operacion SET tipo_operacion = tipo_operacionIn
+WHERE id_operacion = operacionIn ;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.update_pago
+DELIMITER //
+CREATE PROCEDURE `update_pago`(
+	IN `pagoIn` INT,
+	IN `tipo_pagoIn` VARCHAR(50)
+)
+BEGIN
+UPDATE pago SET tipo_pago = tipo_pagoIn
+WHERE id_pago = pagoIn ;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.update_tienda_detalle
+DELIMITER //
+CREATE PROCEDURE `update_tienda_detalle`(
+	IN `detalleIn` INT,
+	IN `descripcionIn` VARCHAR(50),
+	IN `nombreIn` VARCHAR(50),
+	IN `tokenIn` CHAR(50),
+	IN `bovedaIn` INT,
+	IN `cajaIn` INT,
+	IN `cajeroIn` INT,
+	IN `matriculaIn` INT,
+	IN `tiendaIn` INT,
+	IN `ubicacionIn` INT
+)
+BEGIN
+UPDATE tienda_detalle SET descripcion = descripcionIn,
+					 nombre = nombreIn,
+					 token= tokeIn,
+					 n_boveda = bovedaIn,
+					 n_caja = cajaIn,
+					 n_cajero = cajeroIn,
+					 matricula = matriculaIn,
+					 id_tienda = tiendaIn,
+					 id_ubicacion = ubicacionIn
+				WHERE id_detalle = detalleIn ;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.update_tipo_tienda
+DELIMITER //
+CREATE PROCEDURE `update_tipo_tienda`(
+	IN `tiendaIn` INT,
+	IN `descripcionIn` VARCHAR(50),
+	IN `tipo_tirndaIn` VARCHAR(50)
+)
+BEGIN
+UPDATE tipo_tienda SET descripcion = descripcionIn, tipo_tienda = tipo_tirndaIn
+WHERE id_tienda = tiendaIn ;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.update_transaccion_detalle
+DELIMITER //
+CREATE PROCEDURE `update_transaccion_detalle`(
+	IN `tdetalleIn` INT,
+	IN `aperturaIn` DATE,
+	IN `cierreIn` DATE,
+	IN `estatusIn` VARCHAR(50),
+	IN `refereciaIn` INT
+)
+BEGIN
+UPDATE transaccion_detalle SET apertura = aperturaIn,
+					 cierre = cierreIn,
+					 estatus = estatusIn,
+					 referencia = refereciaIn
+				WHERE id_tdetalle = tdetalleIn ;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.update_transaccion_encabezado
+DELIMITER //
+CREATE PROCEDURE `update_transaccion_encabezado`(
+	IN `referenciaIn` INT,
+	IN `fechaIn` DATE,
+	IN `montoIn` DOUBLE,
+	IN `operacion_destinoIn` VARCHAR(50),
+	IN `operacion_origenIn` VARCHAR(50),
+	IN `clienteIn` INT,
+	IN `operacionIn` INT,
+	IN `pagoIn` INT
+)
+BEGIN
+UPDATE transaccion_encabezado SET fecha = fechaIn,
+					  monto = montoIn,
+					 operacion_destino = operacion_destinoIn,
+					 opercion_origen =  operacion_origenIn,
+					 id_cliente= clienteIn,
+					 id_operacion = operacionIn,
+					 id_pago = pagoIn  
+				WHERE referencia = refereciaIn ;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento proyecto.unit00.update_ubicacion
+DELIMITER //
+CREATE PROCEDURE `update_ubicacion`(
+	IN `ubicacionIn` INT,
+	IN `ciudadIn` VARCHAR(50),
+	IN `estadoIn` VARCHAR(50),
+	IN `paisIn` VARCHAR(50),
+	IN `skuIn` CHAR(50)
+)
+BEGIN
+UPDATE ubucacion SET  ciudad= ciudadIn,
+					  estado= estadoIn,
+					 pais = paisIn,
+					 sku = skuIn
+				WHERE id_ubicacion = ubicacionIn ;
+END//
+DELIMITER ;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
